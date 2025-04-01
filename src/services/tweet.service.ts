@@ -1,6 +1,6 @@
 import { Tweet, Usuario } from '@prisma/client';
 import { prismaClient  } from "../database/prisma.client";
-import { cadastrarTweetDTO } from '../dto/tweet.dto'
+import { AtualizarTweetDTO, cadastrarTweetDTO } from '../dto/tweet.dto'
 import { HTTPError } from '../utils/http.error';
 
 export class TweetService {
@@ -67,6 +67,30 @@ export class TweetService {
 
     return novoTweet;
 
+  }
+
+  public async atualizar({ id, conteudo, tipo}: AtualizarTweetDTO): Promise<Tweet>{
+
+    const updateTweet = await prismaClient.tweet.update({
+      where: { id },
+      data: {
+        conteudo,
+        tipo,
+      }
+    });
+
+    return updateTweet;
+  }
+
+  public async deletar(id: number): Promise<Tweet>{
+    
+    await this.listarTweets()
+    
+    const deletarTweet = await prismaClient.tweet.delete({
+      where: { id },
+    });
+
+    return deletarTweet;
   }
 
 }

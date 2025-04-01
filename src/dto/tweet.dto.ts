@@ -6,3 +6,10 @@ export interface cadastrarTweetDTO {
     usuarioId: number;
     replyToId?: number;
 }
+
+export interface AtualizarTweetDTO {
+    id: number;
+    conteudo: string;
+    tipo: TweetType;
+    replyToId?: number;
+}
