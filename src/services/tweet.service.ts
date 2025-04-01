@@ -1,9 +1,7 @@
-import { Tweet } from '@prisma/client';
+import { Tweet, Usuario } from '@prisma/client';
 import { prismaClient  } from "../database/prisma.client";
 import { cadastrarTweetDTO } from '../dto/tweet.dto'
-
-
-
+import { HTTPError } from '../utils/http.error';
 
 export class TweetService {
 
@@ -26,6 +24,35 @@ export class TweetService {
     });
 
     return listarTweets;
+  }
+
+  public async listarPorId(usuarioId: number): Promise<Tweet[]> {
+
+    if(!usuarioId || isNaN(usuarioId) || usuarioId <= 0){
+      throw new HTTPError(404, "ID de usuário não encontrado.")
+    }
+
+    const listarPorId = await prismaClient.tweet.findMany({
+      where: { usuarioId: Number(usuarioId)},
+      include: {
+        usuario: {
+          select: {
+            id: true,
+            nome: true,
+            username: true,
+          },
+        },
+        replies: true,
+        likes: true,
+      },
+      
+    });
+
+    if (!listarPorId || listarPorId.length === 0) {
+      throw new HTTPError(404, `Nenhum tweet encontrado para o usuário com ID ${usuarioId}.`);
+    }
+    
+    return listarPorId;
   }
   
   public async cadastrar({conteudo, tipo, usuarioId}: cadastrarTweetDTO): Promise<Tweet>{

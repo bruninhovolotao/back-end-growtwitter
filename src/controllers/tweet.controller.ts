@@ -11,10 +11,10 @@ export class TweetController{
         
         try {
             // input
-         const service = new TweetService();
+            const service = new TweetService();
 
-         // processamento
-      const tweets = await service.listarTweets();
+            // processamento
+            const tweets = await service.listarTweets();
 
       // resposta
       res.status(200).json({
@@ -27,7 +27,28 @@ export class TweetController{
     }
     }
 
-    public async listarPorId(req: Request, res: Response): Promise<void> {}
+    public async listarPorId(req: Request, res: Response): Promise<void> {
+        try {
+
+            const { usuarioId } = req.params;
+            const userId = Number(usuarioId);
+
+            // input
+            const service = new TweetService();
+
+            // processamento
+            const tweets = await service.listarPorId( userId );
+
+      // resposta
+      res.status(200).json({
+        success: true,
+        message: "Lista de tweets carregada com sucesso",
+        dados: tweets,
+      });
+    } catch (error) {
+      onError(error, res);
+    }
+    }
 
     public async cadastrar(req: Request, res: Response): Promise<void> {
         try {
