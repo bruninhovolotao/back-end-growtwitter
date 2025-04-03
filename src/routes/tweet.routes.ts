@@ -1,12 +1,13 @@
-import { Router } from 'express';
+import { Router } from "express";
 import { TweetController } from '../controllers/tweet.controller';
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 export class tweetRoutes {
     public static bind(): Router{
-        
         const router = Router();
-
         const controller = new TweetController();
+
+        router.use(authMiddleware);
         
         router.get("/tweets", controller.listar);
         router.get("/tweets/:id", controller.listarPorId);
