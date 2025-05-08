@@ -2,7 +2,7 @@ import { Router } from "express";
 import { TweetController } from '../controllers/tweet.controller';
 import { authMiddleware } from "../middlewares/auth.middleware";
 
-export class tweetRoutes {
+export class TweetRoutes {
     public static bind(): Router{
         const router = Router();
         const controller = new TweetController();

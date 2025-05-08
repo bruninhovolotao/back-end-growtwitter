@@ -2,8 +2,7 @@ import { Router } from "express";
 import { UsuarioController } from "../controllers/usuario.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 
-
-export class usuarioRoutes {
+export class UsuarioRoutes  {
     public static bind(): Router {
         const router = Router();
         const controller = new UsuarioController();
@@ -14,7 +13,6 @@ export class usuarioRoutes {
         router.get("/user/:id", controller.listarPorId);
         router.put("/:id", authMiddleware, controller.atualizar);
         router.delete("/:id", authMiddleware, controller.deletar);
-        
 
         return router;
     }

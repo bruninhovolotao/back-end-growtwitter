@@ -2,7 +2,7 @@ import { Router } from "express";
 import { LikeController } from "../controllers/like.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 
-export class likeRoutes {
+export class LikeRoutes {
     public static bind(): Router {
         const router = Router();
         const controller = new LikeController();

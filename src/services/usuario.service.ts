@@ -48,13 +48,13 @@ export class UsuarioService {
         });
 
         if (!usuario) {
-            throw new HTTPError(404, "Usuário não encontrado");
+            throw new HTTPError(401, "Usuário não encontrado");
         }
 
         const senhaValida = await bcrypt.compare(senha, usuario.senha);
 
         if (!senhaValida) {
-            throw new HTTPError(401, "Senha inválida");
+            throw new HTTPError(402, "Senha inválida");
         }
 
         //  token JWT 

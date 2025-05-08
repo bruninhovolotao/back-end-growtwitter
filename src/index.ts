@@ -1,8 +1,8 @@
 import express from 'express';
 import {envs} from './envs';
-import { usuarioRoutes } from './routes/usuario.routes';
-import { tweetRoutes } from './routes/tweet.routes';
-import { likeRoutes } from './routes/like.routes';
+import { UsuarioRoutes  } from './routes/usuario.routes';
+import { TweetRoutes } from './routes/tweet.routes';
+import { LikeRoutes } from './routes/like.routes';
 import cors from 'cors';
 
 const app = express();
@@ -18,8 +18,8 @@ app.get("/", (_, res, next) => {
     })
 });
 
-app.use(usuarioRoutes.bind())
-app.use(tweetRoutes.bind())
-app.use(likeRoutes.bind())
+app.use(UsuarioRoutes .bind())
+app.use(TweetRoutes.bind())
+app.use(LikeRoutes.bind())
 
 app.listen(envs.PORT, () => console.log('Servidor conectado com sucesso.'))
