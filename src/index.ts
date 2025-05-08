@@ -3,9 +3,11 @@ import {envs} from './envs';
 import { usuarioRoutes } from './routes/usuario.routes';
 import { tweetRoutes } from './routes/tweet.routes';
 import { likeRoutes } from './routes/like.routes';
-
+import cors from 'cors';
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 
