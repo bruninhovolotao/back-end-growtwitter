@@ -3,6 +3,7 @@ import { HTTPError } from "../utils/http.error";
 import { onError } from "../utils/on-error";
 import { prismaClient } from "../database/prisma.client";
 import { TweetService } from "../services/tweet.service";
+import { AuthenticatedRequest } from "../middlewares/auth.middleware";
 
 export class TweetController{
     public async listar(req: Request, res: Response): Promise<void> {
@@ -46,10 +47,16 @@ export class TweetController{
             }
     }
 
-    public async cadastrar(req: Request, res: Response): Promise<void> {
+    public async cadastrar(req: AuthenticatedRequest, res: Response): Promise<void> {
         try {
             // input
-            const { conteudo, tipo, usuarioId } = req.body;
+            const { conteudo, tipo } = req.body;
+            const usuarioId = req.userId
+
+            if (!usuarioId) {
+            throw new HTTPError(401, "Usuário não autenticado.");
+            }
+
             const service = new TweetService();
             
             // processamento

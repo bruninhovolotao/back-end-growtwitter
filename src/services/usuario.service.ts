@@ -60,8 +60,7 @@ export class UsuarioService {
         //  token JWT 
         const token = jwt.sign(
             { id: usuario.id },
-            process.env.JWT_SECRET || "minhaChaveSecreta",
-            { expiresIn: "1h" }
+            process.env.JWT_SECRET || "minhaChaveSecreta"
         );
 
         const { senha: _, ...usuarioSemSenha } = usuario;
