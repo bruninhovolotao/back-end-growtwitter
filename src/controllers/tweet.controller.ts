@@ -21,6 +21,7 @@ export class TweetController{
                 message: "Lista de tweets carregada com sucesso",
                 dados: tweets,
         });
+        
         } catch (error) {
             onError(error, res);
         }
