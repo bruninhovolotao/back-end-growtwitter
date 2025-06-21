@@ -7,6 +7,7 @@ export class TweetService {
 
   public async listarTweets(): Promise<Tweet[]> {
     const listarTweets = await prismaClient.tweet.findMany({
+      where:{ tipo: "tweet"},
       include: {
         usuario: {
           select: {
@@ -15,7 +16,22 @@ export class TweetService {
             username: true,
           },
         },
-        replies: true,
+        _count:{
+          select:{
+            replies: true
+          }
+        },
+        replies: {
+          include:{
+            usuario:{
+              select:{
+                id: true,
+                username: true,
+                nome: true,
+              }
+            }
+          }
+        },
         likes: true,
       },
       orderBy: {
@@ -42,7 +58,22 @@ export class TweetService {
             username: true,
           },
         },
-        replies: true,
+        _count:{
+          select:{
+            replies: true
+          }
+        },
+        replies: {
+          include:{
+            usuario:{
+              select:{
+                id: true,
+                username: true,
+                nome: true,
+              }
+            }
+          }
+        },
         likes: true,
       },
       
