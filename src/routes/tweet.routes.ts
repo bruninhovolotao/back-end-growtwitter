@@ -12,6 +12,7 @@ export class TweetRoutes {
         router.get("/tweets", controller.listar);
         router.get("/tweets/:id", controller.listarPorId);
         router.post("/tweets", controller.cadastrar);
+        router.post("/tweets/:id/reply", controller.criarRetweet);
         router.put("/tweets/:id", controller.atualizar);
         router.delete("/tweets/:id", controller.deletar);
 

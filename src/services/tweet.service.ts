@@ -1,6 +1,6 @@
 import { Tweet, Usuario } from '@prisma/client';
 import { prismaClient  } from "../database/prisma.client";
-import { AtualizarTweetDTO, cadastrarTweetDTO } from '../dto/tweet.dto'
+import { AtualizarTweetDTO, cadastrarTweetDTO, CriarRetweet } from '../dto/tweet.dto'
 import { HTTPError } from '../utils/http.error';
 
 export class TweetService {
@@ -67,6 +67,26 @@ export class TweetService {
 
     return novoTweet;
 
+  }
+
+  public async criarRetweet({tweetId, conteudo, usuarioId}: CriarRetweet): Promise<Tweet>{
+      const tweet = await prismaClient.tweet.findUnique({
+        where:{ id: tweetId }
+      });
+
+      if(!tweet){
+        throw new HTTPError(404, `Nenhum tweet encontrado para o usuário com esse ID ${tweetId}.`);
+      }
+
+      const reply = await prismaClient.tweet.create({
+        data:{
+          conteudo,
+          tipo: "reply",
+          usuarioId,
+          replyToId: tweetId
+        }
+      })
+      return reply
   }
 
   public async atualizar({ id, conteudo, tipo}: AtualizarTweetDTO): Promise<Tweet>{

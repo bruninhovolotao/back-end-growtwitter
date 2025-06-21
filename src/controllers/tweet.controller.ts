@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { HTTPError } from "../utils/http.error"; 
 import { onError } from "../utils/on-error";
-import { prismaClient } from "../database/prisma.client";
 import { TweetService } from "../services/tweet.service";
 import { AuthenticatedRequest } from "../middlewares/auth.middleware";
 
@@ -73,7 +72,40 @@ export class TweetController{
             } catch (error) {
                 onError(error, res);
             }
+    }
+
+    public async criarRetweet(req: Request, res: Response): Promise<void>{
+        try {
+            const { id: tweetIdParams } = req.params
+            const { conteudo } = req.body
+            const usuarioId = req.userId
+            const tweetId = Number(tweetIdParams);
+
+            if (!conteudo || isNaN(tweetId)) {
+                res.status(400).json({
+                success: false,
+                message: "Conteúdo ou ID do tweet inválido.",
+                });
+                return;
+            }
+
+            const service = new TweetService();
+
+            const reply = await service.criarRetweet({
+                conteudo, 
+                usuarioId, 
+                tweetId
+            });
+
+            res.status(201).json({
+                sucess: true,
+                message: "Resposta criada com sucesso",
+                data: reply
+            })
+        } catch (error) {
+            onError(error, res)
         }
+    }
             
     public async atualizar(req: Request, res: Response): Promise<void> {
         try {

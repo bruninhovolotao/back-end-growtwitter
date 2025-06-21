@@ -13,3 +13,9 @@ export interface AtualizarTweetDTO {
     tipo: TweetType;
     replyToId?: number;
 }
+
+export interface CriarRetweet{
+    tweetId: number,
+    conteudo: string,
+    usuarioId: number;
+}
