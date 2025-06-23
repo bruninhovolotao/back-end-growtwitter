@@ -106,6 +106,26 @@ export class TweetController{
             onError(error, res)
         }
     }
+
+    public async feed(req: Request, res: Response): Promise<void>{
+        const usuarioId = req.userId
+
+        try {
+            const service = new TweetService();
+
+            const feed = await service.feed({usuarioId});
+
+            res.status(201).json({
+                sucess: true,
+                message: "Feed carregado com sucesso",
+                data: feed
+            })
+            
+        } catch (error) {
+            onError(error, res)
+            
+        }
+    }
             
     public async atualizar(req: Request, res: Response): Promise<void> {
         try {
@@ -127,7 +147,7 @@ export class TweetController{
                 onError(error, res);
                 
             }
-        }
+    }
 
     public async deletar(req: Request, res: Response): Promise<void> {
         try {

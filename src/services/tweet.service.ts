@@ -1,6 +1,6 @@
 import { Tweet, Usuario } from '@prisma/client';
 import { prismaClient  } from "../database/prisma.client";
-import { AtualizarTweetDTO, cadastrarTweetDTO, CriarRetweet } from '../dto/tweet.dto'
+import { AtualizarTweetDTO, cadastrarTweetDTO, CriarRetweet, Feed } from '../dto/tweet.dto'
 import { HTTPError } from '../utils/http.error';
 
 export class TweetService {
@@ -118,6 +118,58 @@ export class TweetService {
         }
       })
       return reply
+  }
+
+  public async feed({usuarioId}:Feed): Promise<Tweet>{
+    const follow = await prismaClient.seguidor.findMany({
+      where:{
+        seguidorId: usuarioId
+      },
+      select:{
+        usuarioId: true,
+      }
+    });
+    const idsSeguidos = follow.map((s) => s.usuarioId);
+    const usersFeed = [...idsSeguidos, usuarioId]
+
+    const feed = await prismaClient.tweet.findMany({
+      where:{
+        usuarioId: {
+          in: usersFeed
+        },
+        tipo: "tweet",
+      },
+      include:{
+        usuario:{
+          select:{
+            id: true,
+            nome: true,
+            username: true,
+          }
+        },
+        _count:{
+          select:{
+            likes: true,
+            replies: true,
+          }
+        },
+        replies:{
+          include:{
+            usuario:{
+              select:{
+                id: true,
+                nome: true,
+                username: true,
+              }
+            }
+          }
+        },
+      },
+      orderBy:{
+        criadoEm: 'desc'
+      }
+    });
+    return feed;
   }
 
   public async atualizar({ id, conteudo, tipo}: AtualizarTweetDTO): Promise<Tweet>{

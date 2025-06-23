@@ -19,3 +19,7 @@ export interface CriarRetweet{
     conteudo: string,
     usuarioId: number;
 }
+
+export interface Feed{
+    usuarioId: number;
+}
