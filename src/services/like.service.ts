@@ -1,5 +1,5 @@
 import { Like } from "@prisma/client";
-import { prismaClient } from "../database/prisma.client";
+import prismaClient from "../database/prisma.client";
 import { CreateLikeDTO, UpdateLikeDTO } from "../dto/like.dto";
 import { HTTPError } from "../utils/http.error";
 

@@ -1,4 +1,4 @@
-import { prismaClient } from "../database/prisma.client";
+import prismaClient from "../database/prisma.client";
 import { HTTPError } from "../utils/http.error";
 import { CreateSeguidorDTO, UpdateSeguidorDTO } from "../dto/seguidor.dto";
 

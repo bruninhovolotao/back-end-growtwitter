@@ -1,6 +1,6 @@
 
 import { Usuario } from "@prisma/client";
-import { prismaClient } from "../database/prisma.client";
+import prismaClient from "../database/prisma.client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { HTTPError } from "../utils/http.error";

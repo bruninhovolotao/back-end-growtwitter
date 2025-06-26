@@ -1,5 +1,5 @@
 import { Tweet, Usuario } from '@prisma/client';
-import { prismaClient  } from "../database/prisma.client";
+import prismaClient from "../database/prisma.client";
 import { AtualizarTweetDTO, cadastrarTweetDTO, CriarRetweet, Feed } from '../dto/tweet.dto'
 import { HTTPError } from '../utils/http.error';
 

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { SeguidorService } from "../services/seguidor.service";
 import { onError } from "../utils/on-error";
 import { HTTPError } from "../utils/http.error";
-import { prismaClient } from "../database/prisma.client";
+import prismaClient from "../database/prisma.client";
 
 interface AuthenticatedRequest extends Request {
     userId?: number;
