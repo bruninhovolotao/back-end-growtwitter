@@ -1,9 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1750900211736" clover="3.2.0">
-  <project timestamp="1750900211736" name="All files">
-    <metrics statements="45" coveredstatements="44" conditionals="21" coveredconditionals="18" methods="9" coveredmethods="9" elements="75" coveredelements="71" complexity="0" loc="45" ncloc="45" packages="2" files="2" classes="2"/>
+<coverage generated="1750973017551" clover="3.2.0">
+  <project timestamp="1750973017552" name="All files">
+    <metrics statements="77" coveredstatements="58" conditionals="32" coveredconditionals="20" methods="21" coveredmethods="14" elements="130" coveredelements="92" complexity="0" loc="77" ncloc="77" packages="2" files="3" classes="3"/>
     <package name="services">
-      <metrics statements="42" coveredstatements="41" conditionals="21" coveredconditionals="18" methods="8" coveredmethods="8"/>
+      <metrics statements="74" coveredstatements="55" conditionals="32" coveredconditionals="20" methods="20" coveredmethods="13"/>
+      <file name="tweet.service.ts" path="C:\Users\facil\OneDrive\Documentos\Curso Programacao\Avaliacao-banco-de-dados-2\src\services\tweet.service.ts">
+        <metrics statements="32" coveredstatements="14" conditionals="11" coveredconditionals="2" methods="12" coveredmethods="5"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="47" count="0" type="cond" truecount="0" falsecount="5"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="82" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="83" count="0" type="stmt"/>
+        <line num="86" count="0" type="stmt"/>
+        <line num="89" count="1" type="stmt"/>
+        <line num="91" count="1" type="stmt"/>
+        <line num="99" count="1" type="stmt"/>
+        <line num="103" count="2" type="stmt"/>
+        <line num="104" count="2" type="stmt"/>
+        <line num="108" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="109" count="1" type="stmt"/>
+        <line num="112" count="1" type="stmt"/>
+        <line num="120" count="1" type="stmt"/>
+        <line num="123" count="0" type="stmt"/>
+        <line num="124" count="0" type="stmt"/>
+        <line num="132" count="0" type="stmt"/>
+        <line num="133" count="0" type="stmt"/>
+        <line num="135" count="0" type="stmt"/>
+        <line num="172" count="0" type="stmt"/>
+        <line num="175" count="0" type="stmt"/>
+        <line num="177" count="0" type="stmt"/>
+        <line num="185" count="0" type="stmt"/>
+        <line num="190" count="0" type="stmt"/>
+        <line num="192" count="0" type="stmt"/>
+        <line num="196" count="0" type="stmt"/>
+      </file>
       <file name="usuario.service.ts" path="C:\Users\facil\OneDrive\Documentos\Curso Programacao\Avaliacao-banco-de-dados-2\src\services\usuario.service.ts">
         <metrics statements="42" coveredstatements="41" conditionals="21" coveredconditionals="18" methods="8" coveredmethods="8"/>
         <line num="3" count="1" type="stmt"/>
@@ -54,9 +89,9 @@
       <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="http.error.ts" path="C:\Users\facil\OneDrive\Documentos\Curso Programacao\Avaliacao-banco-de-dados-2\src\utils\http.error.ts">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="9" type="stmt"/>
-        <line num="3" count="9" type="stmt"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="10" type="stmt"/>
+        <line num="3" count="10" type="stmt"/>
       </file>
     </package>
   </project>

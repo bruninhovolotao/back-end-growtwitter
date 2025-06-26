@@ -1,6 +1,6 @@
 import { Tweet, Usuario } from '@prisma/client';
 import prismaClient from "../database/prisma.client";
-import { AtualizarTweetDTO, cadastrarTweetDTO, CriarRetweet, Feed } from '../dto/tweet.dto'
+import { AtualizarTweetDTO, cadastrarTweetDTO, CriarRetweetDTO, Feed } from '../dto/tweet.dto'
 import { HTTPError } from '../utils/http.error';
 
 export class TweetService {
@@ -100,7 +100,7 @@ export class TweetService {
 
   }
 
-  public async criarRetweet({tweetId, conteudo, usuarioId}: CriarRetweet): Promise<Tweet>{
+  public async criarRetweet({tweetId, conteudo, usuarioId}: CriarRetweetDTO): Promise<Tweet>{
       const tweet = await prismaClient.tweet.findUnique({
         where:{ id: tweetId }
       });
@@ -120,7 +120,7 @@ export class TweetService {
       return reply
   }
 
-  public async feed({usuarioId}:Feed): Promise<Tweet>{
+  public async feed({usuarioId}:Feed): Promise<Tweet[]>{
     const follow = await prismaClient.seguidor.findMany({
       where:{
         seguidorId: usuarioId
