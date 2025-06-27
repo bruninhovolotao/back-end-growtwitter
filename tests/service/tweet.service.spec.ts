@@ -123,6 +123,45 @@ describe('Testes para as funções de cadastro de tweets', () => {
 
     })
 
+    it("Deve retornar os tweets do usuário se existir", async () => {
+      const usuarioId = 1;
+  
+      const mockTweets = [
+        {
+          id: 101,
+          conteudo: "Tweet de teste",
+          tipo: TweetType.tweet,
+          usuarioId,
+          criadoEm: new Date(),
+          replyToId: null,
+          usuario: {
+            id: usuarioId,
+            nome: "Bruno",
+            username: "bruninho",
+          },
+          _count: {
+            replies: 0,
+          },
+          replies: [],
+          likes: [],
+        },
+      ];
+  
+      prismaMock.tweet.findMany.mockResolvedValue(mockTweets);
+  
+      const result = await sut.listarPorId(usuarioId);
+  
+      expect(result).toHaveLength(1);
+      expect(result[0]).toHaveProperty("id", 101);
+      expect(result[0]).toHaveProperty("usuario.nome", "Bruno");
+    });
+  
+    it("Deve lançar erro se o ID do usuário for inválido", async () => {
+      const idInvalido = 0;
+  
+      await expect(sut.listarPorId(idInvalido)).rejects.toThrow("ID de usuário não encontrado.");
+    });
+
     it('Deve criar o retweet se enviado corretamente', async () => {
         const input = {
             id: 1,
@@ -162,6 +201,113 @@ describe('Testes para as funções de cadastro de tweets', () => {
         prismaMock.tweet.findUnique.mockResolvedValue(null);
       
         await expect(sut.criarRetweet(input)).rejects.toThrow("Nenhum tweet encontrado para o usuário com esse ID 1.");
-      });      
+    });
+    
+    it("Deve retornar o feed com tweets do usuário e dos que ele segue", async () => {
+      const usuarioId = 1;
+  
+      prismaMock.seguidor.findMany.mockResolvedValue([{ usuarioId: 2 } as any, { usuarioId: 3 },
+      ]);
+  
+      const mockFeed = [
+        {
+          id: 101,
+          conteudo: "Tweet de usuário seguido",
+          tipo: TweetType.tweet,
+          criadoEm: new Date(),
+          replyToId: 101,
+          usuarioId: 2,
+          usuario: {
+            id: 2,
+            nome: "João",
+            username: "joao",
+          },
+          _count: {
+            likes: 3,
+            replies: 1,
+          },
+          replies: [
+            {
+              id: 201,
+              conteudo: "Reply ao tweet",
+              criadoEm: new Date(),
+              tipo: TweetType.reply,
+              usuarioId: 4,
+              usuario: {
+                id: 4,
+                nome: "Pedro",
+                username: "pedro",
+              },
+            },
+          ],
+        },
+        {
+          id: 102,
+          conteudo: "Tweet do próprio usuário",
+          tipo: TweetType.tweet,
+          criadoEm: new Date(),
+          usuarioId: 1,
+          replyToId: 102,
+          usuario: {
+            id: 1,
+            nome: "Bruninho",
+            username: "bruninho",
+          },
+          _count: {
+            likes: 1,
+            replies: 0,
+          },
+          replies: [],
+        },
+      ];
+  
+      prismaMock.tweet.findMany.mockResolvedValue(mockFeed);
+  
+      const result = await sut.feed({usuarioId}) as Array<Tweet & {
+        usuario: { id: number; nome: string; username: string };
+        likes: any[];
+        replies: any[];
+        _count: { replies: number };
+      }>;
+  
+      expect(result).toHaveLength(2);
+  
+      result.forEach((tweet) => {
+        expect(tweet).toHaveProperty("id");
+        expect(tweet).toHaveProperty("conteudo");
+        expect(tweet).toHaveProperty("usuario.nome");
+        expect(tweet).toHaveProperty("_count.likes");
+        expect(Array.isArray(tweet.replies)).toBe(true);
+      });
+  
+      const usuarioIdsNoFeed = result.map((t) => t.usuarioId);
+      expect(usuarioIdsNoFeed).toEqual(expect.arrayContaining([1, 2]));
+    });
+
+    it("Deve atualizar o tweet e retornar os dados atualizados", async () => {
+      const input = {
+        id: 1,
+        conteudo: "Tweet atualizado",
+        tipo: TweetType.tweet,
+      };
+  
+      const mockTweetAtualizado = {
+        id: 1,
+        conteudo: "Tweet atualizado",
+        tipo: TweetType.tweet,
+        usuarioId: 10,
+        criadoEm: new Date(),
+        replyToId: null,
+      };
+  
+      prismaMock.tweet.update.mockResolvedValue(mockTweetAtualizado);
+  
+      const result = await sut.atualizar(input);
+  
+      expect(result).toBeDefined();
+      expect(result.id).toBe(1);
+      expect(result.conteudo).toBe("Tweet atualizado");
+      expect(result.tipo).toBe(TweetType.tweet);
+    });
 
 })
