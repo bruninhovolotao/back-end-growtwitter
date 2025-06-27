@@ -95,6 +95,35 @@ describe('Testes para as funções de likes', () => {
         });
     });
 
+    it("Deve retornar o like se o ID for válido e existir", async () => {
+      const mockLike = {
+        id: 1,
+        usuarioId: 2,
+        tweetId: 3,
+        criadoEm: new Date(),
+        atualizadoEm: new Date(),
+      };
+  
+      prismaMock.like.findUnique.mockResolvedValue(mockLike);
+  
+      const result = await sut.buscarPorId(1);
+  
+      expect(result).toBeDefined();
+      expect(result).toHaveProperty("id", 1);
+    });
+
+    it("Deve lançar erro se o ID for zero", async () => {
+      await expect(sut.buscarPorId(0)).rejects.toThrow("ID inválido.");
+    });
+
+    it("Deve lançar erro se o ID for negativo", async () => {
+      await expect(sut.buscarPorId(-5)).rejects.toThrow("ID inválido.");
+    });
+
+    it("Deve lançar erro se o ID não for um número", async () => {
+      await expect(sut.buscarPorId(NaN)).rejects.toThrow("ID inválido.");
+    });
+
     it("Deve atualizar o like com os novos dados e retornar o resultado", async () => {
         const input = {
           id: 1,
