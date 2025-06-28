@@ -1,31 +1,65 @@
-# GrowTwitter - API e DB
+# 🐤 GrowTwitter - API REST
 
-## 📌 Sobre o Projeto
+Uma API completa inspirada no Twitter, desenvolvida com Node.js, Express, Prisma ORM e PostgreSQL.  
+Com funcionalidades de cadastro e login de usuários, criação de tweets e respostas, sistema de seguidores, curtidas (likes), feed personalizado e documentação com Swagger.
 
-O **GrowTwitter** é uma API desenvolvida com **Node.js**, **Express** e **Prisma ORM**, conectada a um banco de dados **PostgreSQL**. A API implementa uma rede social estilo Twitter, permitindo o gerenciamento de usuários, tweets, likes e autenticação.
+---
 
-## 🚀 Funcionalidades
+## 🚀 Tecnologias Utilizadas
 
-- **Cadastro de Usuários** (Nome, E-mail, Username, Senha)
-- **Autenticação de Usuários** (Login com E-mail/Username e Senha)
-- **Criação e Gerenciamento de Tweets** (Tweets e Replies)
-- **Sistema de Likes em Tweets**
-- **Sistema de Seguidores**
+- **Node.js** com **Express**
+- **TypeScript**
+- **Prisma ORM**
+- **PostgreSQL**
+- **JWT** para autenticação
+- **BCrypt** para hashing de senhas
+- **Swagger Autogen** para documentação
+- **Jest** para testes automatizados
+- **dotenv** para variáveis de ambiente
 
-## 📦 Tecnologias Utilizadas
+---
 
-- **Node.js** + **Express.js** → Construção da API REST
-- **Prisma ORM** → Modelagem e gerenciamento do banco de dados
-- **PostgreSQL** → Banco de dados relacional
-- **JWT (JSON Web Token)** → Autenticação e segurança
-- **Bcrypt.js** → Criptografia de senhas
-- **Dotenv** → Gerenciamento de variáveis de ambiente
+## 📚 Funcionalidades Implementadas
 
-## 🏗 Modelagem do Banco de Dados
+### 👤 Usuários
 
-O banco de dados foi modelado utilizando **Prisma ORM** com suporte para PostgreSQL. A estrutura básica inclui:
+- Cadastro de usuários (`/sign-up`)
+- Login com retorno de token JWT (`/login`)
+- Listagem de usuários (`/user`)
+- Buscar usuário por ID (`/user/{id}`)
+- Atualizar dados do usuário (`PUT /user/{id}`)
+- Excluir usuário (`DELETE /user/{id}`)
 
-- **Usuários**
-- **Tweets**
-- **Likes**
-- **Seguidores**
+### 📝 Tweets
+
+- Criar tweet (`POST /tweets`)
+- Listar todos os tweets (`GET /tweets`)
+- Listar tweets por ID de usuário (`GET /tweets/{id}`)
+- Criar reply (resposta) a tweet (`POST /tweets/{id}/reply`)
+- Atualizar tweet (`PUT /tweets/{id}`)
+- Deletar tweet (`DELETE /tweets/{id}`)
+
+### 🧵 Feed
+
+- Feed de tweets de usuários seguidos (`GET /feed`)
+
+### 🤝 Seguidores
+
+- Seguir usuários
+- Listar seguidores
+
+### ❤️ Likes
+
+- Curtir tweets
+- Atualizar curtidas
+- Listar curtidas
+- Deletar curtidas
+
+---
+
+## 🧪 Testes Automatizados
+
+- Cobertura de **88%** de código (`statements`, `branches`, `functions` e `lines`)
+- Testes **unitários** em todos os serviços (`services`)
+- Uso de **mocks** para `prismaClient`, `bcrypt` e `jwt`
+- Testes com diversos asserts (`toBeDefined`, `toThrow`, `toEqual`, `not.toHaveProperty`, etc.)
