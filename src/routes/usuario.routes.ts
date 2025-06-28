@@ -5,14 +5,13 @@ import { authMiddleware } from "../middlewares/auth.middleware";
 export class UsuarioRoutes  {
     public static bind(): Router {
         const router = Router();
-        const controller = new UsuarioController();
         
-        router.post("/sign-up", controller.cadastrar);
-        router.post("/login", controller.login);
-        router.get("/user", controller.listar);
-        router.get("/user/:id", controller.listarPorId);
-        router.put("/:id", authMiddleware, controller.atualizar);
-        router.delete("/:id", authMiddleware, controller.deletar);
+        router.post("/sign-up", UsuarioController.cadastrar);
+        router.post("/login", UsuarioController.login);
+        router.get("/user", UsuarioController.listar);
+        router.get("/user/:id", UsuarioController.listarPorId);
+        router.put("/user/:id", authMiddleware, UsuarioController.atualizar);
+        router.delete("/user/:id", authMiddleware, UsuarioController.deletar);
 
         return router;
     }
